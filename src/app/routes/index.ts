@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import DeliveryAssociateRouter from '../modules/deliveryAssociate/deliveryAssociate.routes'
 import ShipmentRouter from '../modules/shipment/shipment.routes'
 import UserRouter from '../modules/user/user.routes'
 
@@ -8,6 +9,10 @@ const moduleRoutes = [
   {
     path: '/user',
     route: UserRouter,
+  },
+  {
+    path: '/deliveryAssociate',
+    route: DeliveryAssociateRouter,
   },
   {
     path: '/shipment',

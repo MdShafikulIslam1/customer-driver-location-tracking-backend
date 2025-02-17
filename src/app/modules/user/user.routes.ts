@@ -9,7 +9,14 @@ router.post('/sign-up', UserController.createUser)
 
 router.post('/login', UserController.login)
 
+router.post('/delivery-login', UserController.deliveryLogin)
+
 router.post('/verify-login', UserController.verifyLogin)
+
+router.post(
+  '/delivery-associate-verify-login',
+  UserController.deliveryAssociateVerifyLogin,
+)
 
 const UserRouter = router
 

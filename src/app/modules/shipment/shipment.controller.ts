@@ -14,8 +14,20 @@ const createShipment = catchAsync(async (req, res) => {
   })
 })
 
+const updateShipment = catchAsync(async (req, res) => {
+  const shipmentId = req.params.id
+  const shipment = await ShipmentService.updateShipment(req.body, shipmentId)
+  sendResponse(res, {
+    success: true,
+    message: 'Shipment updated successfully',
+    data: shipment,
+    statusCode: httpStatus.OK,
+  })
+})
+
 const ShipmentController = {
   createShipment,
+  updateShipment,
 }
 
 export default ShipmentController

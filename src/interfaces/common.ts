@@ -13,3 +13,7 @@ export type IGenericErrorResponse = {
   message: string
   errorMessages: IGenericErrorMessages[]
 }
+
+export interface ISubscribeToShipment {
+  shipmentId: string
+}

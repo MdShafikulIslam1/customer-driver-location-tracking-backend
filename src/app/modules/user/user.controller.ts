@@ -23,12 +23,32 @@ const login = catchAsync(async (req, res) => {
   })
 })
 
+const deliveryLogin = catchAsync(async (req, res) => {
+  const result = await UserService.deliveryLogin(req.body)
+  return sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'delivery associate login completed successfully',
+    data: result,
+  })
+})
+
 const verifyLogin = catchAsync(async (req, res) => {
   const result = await UserService.verifyLogin(req.body)
   return sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'login verification successfully',
+    data: result,
+  })
+})
+
+const deliveryAssociateVerifyLogin = catchAsync(async (req, res) => {
+  const result = await UserService.deliveryAssociateVerifyLogin(req.body)
+  return sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'deliveryAssociate verify login verification successfully',
     data: result,
   })
 })
@@ -49,6 +69,8 @@ const UserController = {
   login,
   verifyLogin,
   getSingleUser,
+  deliveryLogin,
+  deliveryAssociateVerifyLogin,
 }
 
 export default UserController
