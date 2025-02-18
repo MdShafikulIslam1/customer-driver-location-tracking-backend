@@ -5,7 +5,6 @@ import ShipmentService from './shipment.service'
 
 const createShipment = catchAsync(async (req, res) => {
   const shipment = await ShipmentService.createShipment(req.body)
-
   sendResponse(res, {
     success: true,
     message: 'Shipment created successfully',

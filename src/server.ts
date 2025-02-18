@@ -1,7 +1,11 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import http from 'http'
 import mongoose from 'mongoose'
 import { Server } from 'socket.io'
 import app from './app'
+import DeliveryAssociate from './app/modules/deliveryAssociate/deliveryAssociate.model'
+import DeliveryAssociateService from './app/modules/deliveryAssociate/deliveryAssociate.service'
 import Shipment from './app/modules/shipment/shipment.model'
 import config from './config'
 import { socketEvents } from './constant'
@@ -21,10 +25,18 @@ async function main() {
     // Handle socket connection
     io.on('connection', socket => {
       console.log(`🔌 User connected: ${socket.id}`)
-
       // Handle disconnection
       socket.on('disconnect', () => {
         console.log(`❌ User disconnected: ${socket.id}`)
+      })
+
+      // UPDATE_DA_LOCATION : Sent by delivery associates when driving
+      socket.on(socketEvents.UPDATE_DA_LOCATION, async (data: any) => {
+        console.log('update ddfsfa lcoation', data)
+        await DeliveryAssociateService.updateDeliveryAssociateLocation(
+          data?.location,
+          data?.id,
+        )
       })
 
       // SUBSCRIBE_TO_SHIPMENT
@@ -35,6 +47,13 @@ async function main() {
         },
       )
 
+      // SUBSCRIBE_TO_DELIVERY_ASSOCIATE
+      socket.on(
+        socketEvents.SUBSCRIBE_TO_DA,
+        (data: { deliveryAssociateId: string }) => {
+          socket.join(data?.deliveryAssociateId)
+        },
+      )
       // MongoDB Change Streams
       const watchOptions = {
         fullDocument: 'updateLookup',
@@ -42,8 +61,6 @@ async function main() {
 
       Shipment.watch([], watchOptions).on('change', (data: any) => {
         const fullDocument = data?.fullDocument
-        console.log(' change stream full document: ', fullDocument)
-
         if (data.operationType === 'insert') {
           // Broadcast Shipment Available Msg to Delivery Associates
           io.emit(socketEvents.SHIPMENT_CREATED, fullDocument)
@@ -54,6 +71,14 @@ async function main() {
             fullDocument,
           )
         }
+      })
+
+      DeliveryAssociate.watch([], watchOptions).on('change', (data: any) => {
+        const fullDocument = data?.fullDocument
+        io.to(String(fullDocument?._id)).emit(
+          socketEvents.DA_LOCATION_CHANGED,
+          fullDocument,
+        )
       })
     })
 
