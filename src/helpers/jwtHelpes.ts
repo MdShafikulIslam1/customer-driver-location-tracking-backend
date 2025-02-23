@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // import jwt, { JwtPayload, Secret } from 'jsonwebtoken'
 // import config from '../config'
 
@@ -40,7 +41,7 @@ const createToken = (
   expiresTime: string | number,
 ): string => {
   return jwt.sign(payload, '6e8fb8bc-a3c2-49c7-b29a-2c5dbe6fa4f3', {
-    expiresIn: expiresTime,
+    expiresIn: '1h',
   })
 }
 
