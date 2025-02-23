@@ -3,7 +3,7 @@ import config from '../config'
 
 const createToken = (
   payload: Record<string, unknown>,
-  secretKey: Secret,
+  secretKey: string,
   expiresTime: string | number,
 ): string => {
   return jwt.sign(payload, secretKey, { expiresIn: expiresTime })
