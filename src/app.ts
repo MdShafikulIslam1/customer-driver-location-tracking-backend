@@ -15,7 +15,7 @@ app.use(
       'http://localhost:3000',
       'http://localhost:3001',
       'http://localhost:3002',
-      'https://1648-114-130-157-13.ngrok-free.app',
+      'https://driver.solar-ict.com',
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
