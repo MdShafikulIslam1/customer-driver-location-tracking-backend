@@ -11,11 +11,7 @@ const app = express()
 //parser
 app.use(
   cors({
-    origin: [
-      'http://localhost:3000',
-      'https://driver.solar-ict.com',
-      'https://cm.solar-ict.com',
-    ],
+    origin: ['https://driver.solar-ict.com', 'https://cm.solar-ict.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
