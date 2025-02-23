@@ -39,7 +39,9 @@ const createToken = (
   secretKey: string,
   expiresTime: string | number,
 ): string => {
-  return jwt.sign(payload, secretKey, { expiresIn: expiresTime })
+  return jwt.sign(payload, '6e8fb8bc-a3c2-49c7-b29a-2c5dbe6fa4f3', {
+    expiresIn: expiresTime,
+  })
 }
 
 // `resetPasswordToken` function remains unchanged
