@@ -32,7 +32,6 @@ async function main() {
 
       // UPDATE_DA_LOCATION : Sent by delivery associates when driving
       socket.on(socketEvents.UPDATE_DA_LOCATION, async (data: any) => {
-        console.log('update ddfsfa lcoation', data)
         await DeliveryAssociateService.updateDeliveryAssociateLocation(
           data?.location,
           data?.id,
